@@ -2,9 +2,9 @@ extends layout
 block content
     div(class="container-fluid")
         h1= title
-    - let results=[{bag_color:"black",bag_brand:"skybags",bag_price:1290},{bag_color:"green",bag_brand:"RoadStar",bag_price:2500},{bag_color:"red",bag_brand:"American Touister",bag_price:3290}] 
+    - let result=results 
         div(class="row")
-            each form,index in results
+            each form,index in result
                 div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.bag_color}               
                 div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.bag_brand}                
                 div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.bag_price}
