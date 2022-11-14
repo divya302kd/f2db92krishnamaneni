@@ -1,0 +1,28 @@
+extends layout
+block content
+ h1= title
+ form(id='BagForm', action="/resource/bags", method="POST")
+  div.form-group
+   label.bagAttr(for='bag_color') Bag Color
+   input#bag_color(type='text', name='bag_color')
+  div.form-group
+   label.bagAttr(for='bag_brand') Bag Brand
+   input#bag_brand(type='text', name='bag_type')
+  div.form-group
+   label.bagAttr(for='bag_price') Bag Cost 
+   input#bag_price(type='text', name='bag_price')
+  input(type="submit")
+ script.
+  document.forms['BagForm'].addEventListener('submit', (event) => {
+    event.preventDefault();
+    fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) 
+    }).then((resp) => {
+        return resp.json();
+    }).then((body) => {
+        alert("Save succeded")
+    }).catch((error) => {
+        alert("Save failed " + error )
+    });
+   }); 

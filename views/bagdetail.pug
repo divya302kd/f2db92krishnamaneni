@@ -1,0 +1,23 @@
+extends layout
+block content
+ h1= title
+ if(toShow == null)
+    h2 No instance to update
+ else
+ - let bagid = toShow._id
+ - let bag_color = toShow.bag_color
+ - let bag_brand = toShow.bag_brand
+ - let bag_price = toShow.bag_price
+ div
+ div.row
+  div(class='bagAttr mr-3') Bag ID is:
+  div #{bagid}
+ div.row
+ div(class='bagAttr mr-3') Bag Type is:
+ div #{bag_color}
+ div.row
+ div(class='bagAttr mr-3') Bag Size is:
+ div #{bag_brand}
+ div.row
+ div(class='bagAttr mr-3') Bag Cost is:
+ div #{bag_price}

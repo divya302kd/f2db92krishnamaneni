@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  h1= title
+
+  if(toShow == null)
+    h2 No instance to delete
+  else
+    - let bagid = toShow._id
+    - let bag_color = toShow.bag_color
+    - let bag_brand = toShow.bag_brand
+    - let bag_price = toShow.bag_price
+    - let actionid = "/resource/bags/" + bagid
+    script let actionid = "#{actionid}"
+    div
+     div.row 
+      div(class='bagAttr mr-3') Bag ID is:
+      div #{bagid}
+     div.row
+      div(class='bagAttr mr-3') Bag color is:
+      div #{bag_color}
+     div.row
+      div(class='bagAttr mr-3') Bag brand is:
+      div #{bag_brand}
+     div.row
+      div(class='bagAttr mr-3') Bag Price is:
+      div #{bag_price}
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+  script.
+   function cancel() {
+    window.location.href='/bags'
+    }
+  script.
+    function deleteOnid() {
+     console.log("starting delete")
+     fetch(actionid, {
+      method: 'DELETE'
+     }).then((resp) => {
+        return resp.json();
+     }).then((body) => {
+        alert("Delete succeded")
+        window.location.href='/bag'
+     }).catch((error) => {
+        alert("Delete failed " + error )
+     });
+    }
+
+    
