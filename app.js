@@ -6,7 +6,6 @@ var logger = require('morgan');
 var passport = require('passport'); 
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
-
 passport.use(new LocalStrategy( 
   function(username, password, done) { 
     Account.findOne({ username: username }, function (err, user) { 
@@ -20,11 +19,7 @@ passport.use(new LocalStrategy(
       return done(null, user); 
     }); 
   }));
-  app.use(require('express-session')({ 
-    secret: 'keyboard cat', 
-    resave: false,
-    saveUninitialized: false 
-  }));
+ 
 var Account =require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
@@ -55,6 +50,7 @@ db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
 db.once("open", function(){
   console.log("Connection to DB succeeded")});
 // view engine setup
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -62,6 +58,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({ 
+  secret: 'keyboard cat', 
+  resave: false,
+  saveUninitialized: false 
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+    
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -71,7 +75,6 @@ app.use('/gridbuild',gridbuildRouter)
 app.use('/selector',selectorRouter)
 app.use('/resource',resourceRouter)
 
-    
 async function recreateDB() {
   // Delete everything
   await Bag.deleteMany();
